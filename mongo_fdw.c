@@ -419,7 +419,7 @@ MongoBeginForeignScan(ForeignScanState *scanState, int executorFlags)
 	mongoConnection = mongo_create();
 	mongo_init(mongoConnection);
 
-	connectStatus = mongo_connect(mongoConnection, addressName, portNumber);
+	connectStatus = mongo_client(mongoConnection, addressName, portNumber);
 	if (connectStatus != MONGO_OK)
 	{
 		errorCode = (int32) mongoConnection->err;
@@ -648,7 +648,7 @@ ForeignTableDocumentCount(Oid foreignTableId)
 	mongoConnection = mongo_create();
 	mongo_init(mongoConnection);
 
-	status = mongo_connect(mongoConnection, options->addressName, options->portNumber);
+	status = mongo_client(mongoConnection, options->addressName, options->portNumber);
 	if (status == MONGO_OK)
 	{
 		documentCount = mongo_count(mongoConnection, options->databaseName,
